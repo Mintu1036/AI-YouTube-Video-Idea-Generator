@@ -25,6 +25,21 @@ def generate_video_ideas(
     region: str = Query("US", description="YouTube region")
 ):
     # 🔥 Trending Keywords
+    """
+    Generate five creator-style YouTube video ideas for a given topic, tailored to a target audience and region.
+    
+    Parameters:
+    	topic (str): Topic to base the video ideas on.
+    	audience (str): Target audience descriptor (e.g., "Beginners").
+    	region (str): YouTube region code used to contextualize trending videos.
+    
+    Returns:
+    	dict: {
+    		"trending_keywords": list[str],    # trending keywords used for context (fallback to ["No trending keywords found"] if none)
+    		"trending_videos": list[dict],    # list of video info objects with keys "title" and "url" (fallback to a placeholder if none)
+    		"ideas": str                      # generated or fallback multi-item string containing exactly five creator-style video ideas
+    	}
+    """
     trending_keywords = get_trending_keywords(topic)
     if not trending_keywords:
         trending_keywords = ["No trending keywords found"]
