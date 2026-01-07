@@ -8,8 +8,20 @@ YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
 
 def get_youtube_trending_videos(topic: str, region: str, audience: str):
     """
-    GUARANTEES different learning videos for Beginners / Intermediate / Experts
-    and excludes YouTube Shorts.
+    Selects learning-focused YouTube videos for a given topic, region, and audience level.
+    
+    Filters search results to exclude Shorts and obvious non-learning content, prioritizes titles containing audience-relevant keywords, and returns up to six matching videos (or a single fallback entry if none match).
+    
+    Parameters:
+        topic (str): Topic to search for (used to build the query).
+        region (str): Region code to scope results (ISO 3166-1 alpha-2).
+        audience (str): Target learning level; expected values are "beginners", "intermediate", or "experts" (case-insensitive). Values other than "beginners" and "intermediate" are treated as experts.
+    
+    Returns:
+        list[dict]: A list of dictionaries with keys:
+            - "title" (str): Video title.
+            - "url" (str): Full YouTube watch URL.
+        If no suitable videos are found, returns a single-item list containing a fallback entry whose "url" is "#".
     """
 
     audience = audience.lower()
